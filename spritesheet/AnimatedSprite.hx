@@ -121,7 +121,11 @@ class AnimatedSprite extends Sprite {
 	}
 	
 	
+<<<<<<< HEAD
 	public function update (deltaTime:Int):Bool {
+=======
+	public function update (deltaTime:Int):Void {
+>>>>>>> parent of 9c6486e... Update AnimatedSprite.hx
 		
 		if (!behaviorComplete) {
 			
@@ -144,17 +148,33 @@ class AnimatedSprite extends Sprite {
 				
 			}
 			
-			if (ratio >= 1)
-				currentFrameIndex  = (currentBehavior.frames.length - 1);
-			else
-				currentFrameIndex = Math.floor (ratio * currentBehavior.frames.length);
+			// Number of frames in the animation
+			var frameCount = currentBehavior.frames.length;
+			// Duration in ms of a single frame
+			var frameDuration:Int = Math.round(loopTime / frameCount);
+			// This is the number of ms we have been in this animation
+			var timeInAnimation:Int = timeElapsed % loopTime;
+			// The raw frame index is the number of frames we have had time to show
+			var rawFrameIndex:Int = Math.round(timeInAnimation / frameDuration);
+			// Make sure we loop correctly
+			currentFrameIndex = rawFrameIndex % frameCount;
 			
 			var frame = spritesheet.getFrame (currentBehavior.frames [currentFrameIndex]);
+<<<<<<< HEAD
 
 			this.tile.id = frame.id;
 			this.tilemap.x = frame.offsetX - currentBehavior.originX;
 			this.tilemap.y = frame.offsetY - currentBehavior.originY;
 
+=======
+			
+			
+			bitmap.bitmapData = frame.bitmapData;
+			bitmap.smoothing = smoothing;
+			bitmap.x = frame.offsetX - currentBehavior.originX;
+			bitmap.y = frame.offsetY - currentBehavior.originY;
+			
+>>>>>>> parent of 9c6486e... Update AnimatedSprite.hx
 			if (behaviorComplete) {
 				
 				if (behaviorQueue.length > 0) {
